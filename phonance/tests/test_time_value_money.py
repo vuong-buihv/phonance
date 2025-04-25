@@ -1,6 +1,6 @@
 import unittest
 
-from phonance import nir_approx, nir_exact
+from phonance import nir_approx, nir_exact, required_interest_rate
 
 
 class TestNirApprox(unittest.TestCase):
@@ -51,6 +51,45 @@ class TestNirExact(unittest.TestCase):
             nir_exact(0.03, "0.02")
         with self.assertRaises(TypeError):
             nir_exact(None, 0.02)
+
+
+class TestRequiredInterestRate(unittest.TestCase):
+    def test_valid_inputs(self):
+        """Test required_interest_rate with valid positive inputs."""
+        self.assertAlmostEqual(
+            required_interest_rate(0.03, 0.01, 0.005, 0.002), 0.047
+        )
+        self.assertAlmostEqual(
+            required_interest_rate(0.02, 0.0, 0.0, 0.0), 0.02
+        )
+
+    def test_zero_inputs(self):
+        """Test required_interest_rate with all inputs as zero."""
+        self.assertAlmostEqual(
+            required_interest_rate(0.0, 0.0, 0.0, 0.0), 0.0
+        )
+
+    def test_negative_inputs(self):
+        """Test required_interest_rate with negative inputs."""
+        with self.assertRaises(ValueError):
+            required_interest_rate(-0.01, 0.01, 0.005, 0.002)
+        with self.assertRaises(ValueError):
+            required_interest_rate(0.03, -0.01, 0.005, 0.002)
+        with self.assertRaises(ValueError):
+            required_interest_rate(0.03, 0.01, -0.005, 0.002)
+        with self.assertRaises(ValueError):
+            required_interest_rate(0.03, 0.01, 0.005, -0.002)
+
+    def test_invalid_inputs(self):
+        """Test required_interest_rate with invalid input types."""
+        with self.assertRaises(TypeError):
+            required_interest_rate("0.03", 0.01, 0.005, 0.002)
+        with self.assertRaises(TypeError):
+            required_interest_rate(0.03, "0.01", 0.005, 0.002)
+        with self.assertRaises(TypeError):
+            required_interest_rate(0.03, 0.01, None, 0.002)
+        with self.assertRaises(TypeError):
+            required_interest_rate(0.03, 0.01, 0.005, [0.002])
 
 
 if __name__ == '__main__':
