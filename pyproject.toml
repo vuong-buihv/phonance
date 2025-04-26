@@ -1,3 +1,26 @@
 [build-system]
-requires = ["setuptools>=42", "wheel"]
+requires = [
+    "setuptools",
+    "wheel"
+]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "phonance"
+version = "0.0.1"
+description = "A Python library for basic financial calculations."
+readme = "README.md"
+authors = [
+    { name = "Vuong BUI" }
+]
+license = { file = 'LICENSE' }
+requires-python = ">=3.8"
+dependencies = []
+keywords = [
+    "finance",
+    "financial calculation"
+]
+
+[project.urls]
+homepage = "https://github.com/vuong-buihv/phonance"
+repository = "https://github.com/vuong-buihv/phonance"
